@@ -291,14 +291,28 @@
       </div>
     </div>
 
-    <!-- Coming Soon -->
-    <div class="agent coming-soon">
+    <!-- Client Sourcing Agent -->
+    <div class="agent client">
       <div class="agent-header">
         <div class="agent-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">🤝</div>
         <div class="agent-title">
           <h2>Client Sourcing</h2>
-          <p>Find buy-side clients</p>
+          <p>Find buy-side clients ($200K–$5M deals)</p>
         </div>
+      </div>
+      <div class="agent-form">
+        <div class="input-group">
+          <input type="number" id="client-count" value="10" min="1" max="50" style="max-width: 80px;">
+          <select id="client-type">
+            <option value="individual buyers">Individual Buyers</option>
+            <option value="software holdcos">Software HoldCos</option>
+            <option value="VC-backed startups">VC-Backed</option>
+            <option value="app studios">App Studios</option>
+            <option value="roll-up operators">Roll-Up Operators</option>
+          </select>
+        </div>
+        <input type="text" id="client-criteria" placeholder="Looking for: SaaS, content sites, mobile apps...">
+        <button class="btn btn-run" onclick="runClient()">Run</button>
       </div>
     </div>
 
@@ -363,6 +377,16 @@
         return;
       }
       const cmd = `Analyze this deal: ${deal}`;
+      copy(cmd);
+    }
+
+    function runClient() {
+      const count = document.getElementById('client-count').value || '10';
+      const type = document.getElementById('client-type').value || 'individual buyers';
+      const criteria = document.getElementById('client-criteria').value;
+      
+      let cmd = `Find ${count} ${type}`;
+      if (criteria) cmd += ` looking for ${criteria}`;
       copy(cmd);
     }
   </script>
