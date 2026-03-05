@@ -3,182 +3,379 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pocket Fund — Command Centre</title>
+  <title>Pocket Fund — War Room</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #000;
-      color: #fff;
+      background: #0a0a0a;
+      color: #e0e0e0;
       min-height: 100vh;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 20px;
     }
 
     /* Header */
-    header {
+    .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 0 25px;
-      border-bottom: 1px solid #222;
       margin-bottom: 25px;
     }
 
-    header h1 {
+    .header h1 {
       font-size: 18px;
       font-weight: 600;
+      color: #fff;
     }
 
-    .online {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: #22c55e;
-    }
-
-    .online::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: #22c55e;
-      border-radius: 50%;
-    }
-
-    /* Agent Cards */
-    .agent {
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 15px;
-    }
-
-    .agent-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 15px;
-    }
-
-    .agent-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    .content .agent-icon { background: linear-gradient(135deg, #ec4899, #be185d); }
-    .sourcing .agent-icon { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-    .analysis .agent-icon { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-
-    .agent-title h2 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-
-    .agent-title p {
+    .agents-live {
       font-size: 13px;
       color: #666;
     }
 
-    /* Form */
-    .agent-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .agents-live span {
+      color: #22c55e;
     }
 
-    .input-group {
+    /* Agent Row */
+    .agents-row {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .agent-card {
+      flex: 0 0 180px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .agent-card:hover {
+      border-color: #333;
+      transform: translateY(-2px);
+    }
+
+    .agent-card.active {
+      border-color: #22c55e33;
+    }
+
+    .agent-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .status-dot.idle {
+      background: #666;
+    }
+
+    .status-dot.coming {
+      background: #333;
+    }
+
+    .agent-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .agent-task {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .agent-meta {
+      font-size: 11px;
+      color: #444;
+    }
+
+    .add-agent {
+      flex: 0 0 60px;
+      background: #111;
+      border: 1px dashed #333;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 24px;
+      color: #444;
+      transition: all 0.2s;
+    }
+
+    .add-agent:hover {
+      border-color: #555;
+      color: #666;
+    }
+
+    /* Sections */
+    .sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 1000px) {
+      .sections {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section {
+      background: #111;
+      border: 1px solid #1a1a1a;
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-count {
+      font-size: 11px;
+      color: #444;
+      background: #1a1a1a;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* Task Cards */
+    .task-card {
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .task-card:hover {
+      border-color: #333;
+    }
+
+    .task-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .task-title {
+      font-size: 13px;
+      color: #fff;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .task-desc {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .task-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #444;
+    }
+
+    .task-agent {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .task-agent .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    /* In Progress */
+    .section.in-progress {
+      border-color: #f59e0b33;
+    }
+
+    .section.in-progress .task-card {
+      border-left: 2px solid #f59e0b;
+    }
+
+    /* Completed */
+    .section.completed {
+      border-color: #22c55e33;
+    }
+
+    .section.completed .task-card {
+      border-left: 2px solid #22c55e;
+      opacity: 0.8;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 30px;
+      color: #333;
+      font-size: 13px;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
       display: flex;
       gap: 10px;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #1a1a1a;
     }
 
-    .input-group.stack {
-      flex-direction: column;
-    }
-
-    input, textarea, select {
+    .quick-btn {
       flex: 1;
-      padding: 14px 16px;
+      padding: 12px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 8px;
+      color: #888;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .quick-btn:hover {
+      border-color: #444;
+      color: #fff;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 25px;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #666;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal input,
+    .modal textarea,
+    .modal select {
+      width: 100%;
+      padding: 12px 14px;
       background: #0a0a0a;
       border: 1px solid #333;
-      border-radius: 10px;
+      border-radius: 8px;
       color: #fff;
       font-size: 14px;
+      margin-bottom: 12px;
       font-family: inherit;
     }
 
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: #555;
-    }
-
-    textarea {
+    .modal textarea {
       min-height: 100px;
       resize: vertical;
     }
 
-    input::placeholder, textarea::placeholder {
-      color: #555;
+    .modal input:focus,
+    .modal textarea:focus {
+      outline: none;
+      border-color: #555;
     }
 
-    select {
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 40px;
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
     }
 
     .btn {
-      padding: 14px 24px;
+      flex: 1;
+      padding: 12px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.15s;
     }
 
-    .btn-run {
+    .btn-primary {
       background: #fff;
       color: #000;
     }
 
-    .btn-run:hover {
-      background: #e5e5e5;
-    }
-
-    .btn-run:active {
-      transform: scale(0.98);
-    }
-
-    /* Coming Soon */
-    .coming-soon {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .coming-soon .agent-header::after {
-      content: 'Coming Soon';
-      margin-left: auto;
-      font-size: 11px;
-      color: #666;
+    .btn-secondary {
       background: #222;
-      padding: 4px 10px;
-      border-radius: 6px;
+      color: #fff;
     }
 
     /* Toast */
@@ -189,36 +386,17 @@
       transform: translateX(-50%);
       background: #22c55e;
       color: #000;
-      padding: 14px 28px;
-      border-radius: 12px;
+      padding: 12px 24px;
+      border-radius: 10px;
       font-size: 14px;
       font-weight: 600;
       opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 100;
+      transition: opacity 0.3s;
+      z-index: 200;
     }
 
     .toast.show {
       opacity: 1;
-    }
-
-    /* Help text */
-    .help {
-      text-align: center;
-      padding: 20px;
-      color: #444;
-      font-size: 13px;
-    }
-
-    .help a {
-      color: #888;
-    }
-
-    /* Mobile */
-    @media (max-width: 600px) {
-      .input-group {
-        flex-direction: column;
-      }
     }
   </style>
 </head>
@@ -226,113 +404,235 @@
 
   <div class="container">
     
-    <header>
-      <h1>🏦 Pocket Fund</h1>
-      <span class="online">Online</span>
-    </header>
-
-    <!-- Content Agent -->
-    <div class="agent content">
-      <div class="agent-header">
-        <div class="agent-icon">✍️</div>
-        <div class="agent-title">
-          <h2>Content Agent</h2>
-          <p>Twitter & LinkedIn in your voice</p>
-        </div>
-      </div>
-      <div class="agent-form">
-        <div class="input-group">
-          <select id="content-platform">
-            <option value="twitter">Twitter</option>
-            <option value="linkedin">LinkedIn</option>
-          </select>
-          <select id="content-type">
-            <option value="3 options">3 Options</option>
-            <option value="single post">Single Post</option>
-            <option value="thread">Thread</option>
-          </select>
-        </div>
-        <input type="text" id="content-topic" placeholder="Topic: e.g., off-market deal sourcing">
-        <button class="btn btn-run" onclick="runContent()">Run</button>
-      </div>
+    <!-- Header -->
+    <div class="header">
+      <h1>War Room</h1>
+      <div class="agents-live">Agents Live: <span>4/5</span></div>
     </div>
 
-    <!-- Deal Sourcing Agent -->
-    <div class="agent sourcing">
-      <div class="agent-header">
-        <div class="agent-icon">🎯</div>
-        <div class="agent-title">
-          <h2>Deal Sourcing</h2>
-          <p>Find acquisition targets</p>
+    <!-- Agent Row -->
+    <div class="agents-row">
+      <div class="agent-card active" onclick="openAgent('content')">
+        <div class="agent-top">
+          <div class="status-dot"></div>
+          <div class="agent-name">Content</div>
         </div>
+        <div class="agent-task">Twitter & LinkedIn posts</div>
+        <div class="agent-meta">Ready</div>
       </div>
-      <div class="agent-form">
-        <div class="input-group">
-          <input type="number" id="sourcing-count" value="10" min="1" max="50" style="max-width: 80px;">
-          <input type="text" id="sourcing-type" placeholder="Type: SaaS, agency, e-com...">
+
+      <div class="agent-card active" onclick="openAgent('deal-sourcing')">
+        <div class="agent-top">
+          <div class="status-dot"></div>
+          <div class="agent-name">Deal Sourcing</div>
         </div>
-        <input type="text" id="sourcing-criteria" placeholder="Criteria: $500K-$2M ARR, US, growing...">
-        <button class="btn btn-run" onclick="runSourcing()">Run</button>
+        <div class="agent-task">Find acquisition targets</div>
+        <div class="agent-meta">Ready</div>
       </div>
+
+      <div class="agent-card active" onclick="openAgent('deal-analysis')">
+        <div class="agent-top">
+          <div class="status-dot"></div>
+          <div class="agent-name">Deal Analysis</div>
+        </div>
+        <div class="agent-task">Quick deal evaluations</div>
+        <div class="agent-meta">Ready</div>
+      </div>
+
+      <div class="agent-card active" onclick="openAgent('client-sourcing')">
+        <div class="agent-top">
+          <div class="status-dot"></div>
+          <div class="agent-name">Client Sourcing</div>
+        </div>
+        <div class="agent-task">Find buy-side clients</div>
+        <div class="agent-meta">Ready</div>
+      </div>
+
+      <div class="agent-card" onclick="openAgent('admin')">
+        <div class="agent-top">
+          <div class="status-dot coming"></div>
+          <div class="agent-name">Admin</div>
+        </div>
+        <div class="agent-task">Ops & reports</div>
+        <div class="agent-meta">Coming soon</div>
+      </div>
+
+      <div class="add-agent" onclick="alert('More agents coming soon')">+</div>
     </div>
 
-    <!-- Deal Analysis Agent -->
-    <div class="agent analysis">
-      <div class="agent-header">
-        <div class="agent-icon">📊</div>
-        <div class="agent-title">
-          <h2>Deal Analysis</h2>
-          <p>Quick analysis → Pass / Maybe / Explore</p>
+    <!-- Sections -->
+    <div class="sections">
+      
+      <!-- Backlog -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">Backlog</div>
+          <div class="section-count">3</div>
+        </div>
+        
+        <div class="task-card" onclick="runTask('content', 'Write 3 tweet options about off-market deal sourcing')">
+          <div class="task-title">Weekly Twitter content</div>
+          <div class="task-desc">3 tweet options for this week</div>
+          <div class="task-meta">
+            <div class="task-agent"><span class="dot"></span> Content</div>
+          </div>
+        </div>
+
+        <div class="task-card" onclick="runTask('deal-sourcing', 'Find 10 SaaS deals, $500K-$2M ARR, US only')">
+          <div class="task-title">SaaS deal sourcing</div>
+          <div class="task-desc">10 leads, $500K-$2M ARR range</div>
+          <div class="task-meta">
+            <div class="task-agent"><span class="dot"></span> Deal Sourcing</div>
+          </div>
+        </div>
+
+        <div class="task-card" onclick="runTask('client-sourcing', 'Find 10 software holdcos looking for SaaS acquisitions')">
+          <div class="task-title">HoldCo outreach list</div>
+          <div class="task-desc">10 software holdcos to contact</div>
+          <div class="task-meta">
+            <div class="task-agent"><span class="dot"></span> Client Sourcing</div>
+          </div>
         </div>
       </div>
-      <div class="agent-form">
-        <textarea id="analysis-deal" placeholder="Paste deal info: listing URL, description, or key details..."></textarea>
-        <button class="btn btn-run" onclick="runAnalysis()">Run</button>
+
+      <!-- In Progress -->
+      <div class="section in-progress">
+        <div class="section-header">
+          <div class="section-title">In Progress</div>
+          <div class="section-count">0</div>
+        </div>
+        <div class="empty-state">No active tasks</div>
       </div>
+
+      <!-- Completed -->
+      <div class="section completed">
+        <div class="section-header">
+          <div class="section-title">Completed</div>
+          <div class="section-count">2</div>
+        </div>
+
+        <div class="task-card">
+          <div class="task-title">Off-market tweet thread</div>
+          <div class="task-desc">3 options delivered</div>
+          <div class="task-meta">
+            <div class="task-agent"><span class="dot"></span> Content</div>
+            <span>Yesterday</span>
+          </div>
+        </div>
+
+        <div class="task-card">
+          <div class="task-title">Scava Capital email</div>
+          <div class="task-desc">Negotiation reply drafted</div>
+          <div class="task-meta">
+            <div class="task-agent"><span class="dot"></span> Admin</div>
+            <span>Mar 4</span>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Client Sourcing Agent -->
-    <div class="agent client">
-      <div class="agent-header">
-        <div class="agent-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">🤝</div>
-        <div class="agent-title">
-          <h2>Client Sourcing</h2>
-          <p>Find buy-side clients ($200K–$5M deals)</p>
-        </div>
-      </div>
-      <div class="agent-form">
-        <div class="input-group">
-          <input type="number" id="client-count" value="10" min="1" max="50" style="max-width: 80px;">
-          <select id="client-type">
-            <option value="individual buyers">Individual Buyers</option>
-            <option value="software holdcos">Software HoldCos</option>
-            <option value="VC-backed startups">VC-Backed</option>
-            <option value="app studios">App Studios</option>
-            <option value="roll-up operators">Roll-Up Operators</option>
-          </select>
-        </div>
-        <input type="text" id="client-criteria" placeholder="Looking for: SaaS, content sites, mobile apps...">
-        <button class="btn btn-run" onclick="runClient()">Run</button>
-      </div>
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="quick-btn" onclick="openAgent('content')">✍️ New content</div>
+      <div class="quick-btn" onclick="openAgent('deal-sourcing')">🎯 Source deals</div>
+      <div class="quick-btn" onclick="openAgent('deal-analysis')">📊 Analyze deal</div>
+      <div class="quick-btn" onclick="openAgent('client-sourcing')">🤝 Find clients</div>
     </div>
 
-    <div class="agent coming-soon">
-      <div class="agent-header">
-        <div class="agent-icon" style="background: linear-gradient(135deg, #6b7280, #4b5563);">⚙️</div>
-        <div class="agent-title">
-          <h2>Admin Agent</h2>
-          <p>Ops, reports, email handling</p>
-        </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal" id="modal-content">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">✍️ Content Agent</div>
+        <button class="modal-close" onclick="closeModal('content')">&times;</button>
+      </div>
+      <select id="content-platform">
+        <option value="twitter">Twitter</option>
+        <option value="linkedin">LinkedIn</option>
+      </select>
+      <select id="content-type">
+        <option value="3 options">3 Options</option>
+        <option value="single">Single Post</option>
+        <option value="thread">Thread</option>
+      </select>
+      <input type="text" id="content-topic" placeholder="Topic: e.g., off-market deal sourcing">
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('content')">Cancel</button>
+        <button class="btn btn-primary" onclick="runContent()">Run</button>
       </div>
     </div>
+  </div>
 
-    <p class="help">Commands are copied to clipboard. <a href="https://t.me/PocketFundBot" target="_blank">Open Telegram</a> and paste to run.</p>
+  <div class="modal" id="modal-deal-sourcing">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">🎯 Deal Sourcing</div>
+        <button class="modal-close" onclick="closeModal('deal-sourcing')">&times;</button>
+      </div>
+      <input type="number" id="sourcing-count" value="10" placeholder="Number of leads">
+      <input type="text" id="sourcing-type" placeholder="Business type: SaaS, agency, e-com...">
+      <input type="text" id="sourcing-criteria" placeholder="Criteria: $500K-$2M ARR, US only...">
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('deal-sourcing')">Cancel</button>
+        <button class="btn btn-primary" onclick="runSourcing()">Run</button>
+      </div>
+    </div>
+  </div>
 
+  <div class="modal" id="modal-deal-analysis">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">📊 Deal Analysis</div>
+        <button class="modal-close" onclick="closeModal('deal-analysis')">&times;</button>
+      </div>
+      <textarea id="analysis-deal" placeholder="Paste deal info: listing URL, description, or key details..."></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('deal-analysis')">Cancel</button>
+        <button class="btn btn-primary" onclick="runAnalysis()">Run</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-client-sourcing">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">🤝 Client Sourcing</div>
+        <button class="modal-close" onclick="closeModal('client-sourcing')">&times;</button>
+      </div>
+      <input type="number" id="client-count" value="10" placeholder="Number of leads">
+      <select id="client-type">
+        <option value="individual buyers">Individual Buyers</option>
+        <option value="software holdcos">Software HoldCos</option>
+        <option value="VC-backed startups">VC-Backed Startups</option>
+        <option value="app studios">App Studios</option>
+        <option value="roll-up operators">Roll-Up Operators</option>
+      </select>
+      <input type="text" id="client-criteria" placeholder="Looking for: SaaS, content sites, mobile apps...">
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('client-sourcing')">Cancel</button>
+        <button class="btn btn-primary" onclick="runClient()">Run</button>
+      </div>
+    </div>
   </div>
 
   <div class="toast" id="toast">Copied! Paste in Telegram →</div>
 
   <script>
+    function openAgent(agent) {
+      if (agent === 'admin') {
+        alert('Admin Agent coming soon');
+        return;
+      }
+      document.getElementById('modal-' + agent).classList.add('active');
+    }
+
+    function closeModal(agent) {
+      document.getElementById('modal-' + agent).classList.remove('active');
+    }
+
     function showToast() {
       const toast = document.getElementById('toast');
       toast.classList.add('show');
@@ -342,6 +642,12 @@
     function copy(text) {
       navigator.clipboard.writeText(text);
       showToast();
+      // Close all modals
+      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+    }
+
+    function runTask(agent, command) {
+      copy(command);
     }
 
     function runContent() {
@@ -352,12 +658,11 @@
       let cmd = '';
       if (platform === 'twitter') {
         if (type === 'thread') cmd = `Write a Twitter thread about ${topic}`;
-        else if (type === 'single post') cmd = `Write a tweet about ${topic}`;
+        else if (type === 'single') cmd = `Write a tweet about ${topic}`;
         else cmd = `Write 3 tweet options about ${topic}`;
       } else {
         cmd = `Write a LinkedIn post about ${topic}`;
       }
-      
       copy(cmd);
     }
 
@@ -365,9 +670,7 @@
       const count = document.getElementById('sourcing-count').value || '10';
       const type = document.getElementById('sourcing-type').value || 'SaaS';
       const criteria = document.getElementById('sourcing-criteria').value || '$500K-$2M ARR';
-      
-      const cmd = `Find ${count} ${type} deals, ${criteria}`;
-      copy(cmd);
+      copy(`Find ${count} ${type} deals, ${criteria}`);
     }
 
     function runAnalysis() {
@@ -376,19 +679,26 @@
         alert('Paste deal info first');
         return;
       }
-      const cmd = `Analyze this deal: ${deal}`;
-      copy(cmd);
+      copy(`Analyze this deal: ${deal}`);
     }
 
     function runClient() {
       const count = document.getElementById('client-count').value || '10';
-      const type = document.getElementById('client-type').value || 'individual buyers';
+      const type = document.getElementById('client-type').value;
       const criteria = document.getElementById('client-criteria').value;
-      
       let cmd = `Find ${count} ${type}`;
       if (criteria) cmd += ` looking for ${criteria}`;
       copy(cmd);
     }
+
+    // Close modal on background click
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+    });
   </script>
 
 </body>
