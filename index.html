@@ -29,9 +29,15 @@
     }
 
     .header h1 {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 600;
       color: #fff;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
 
     .agents-live {
@@ -43,122 +49,328 @@
       color: #22c55e;
     }
 
-    /* Agent Row */
-    .agents-row {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      padding-bottom: 15px;
-      margin-bottom: 30px;
-      border-bottom: 1px solid #1a1a1a;
-    }
-
-    .agent-card {
-      flex: 0 0 180px;
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 15px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .agent-card:hover {
-      border-color: #333;
-      transform: translateY(-2px);
-    }
-
-    .agent-card.active {
-      border-color: #22c55e33;
-    }
-
-    .agent-top {
+    .connection-status {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
+      gap: 6px;
+      font-size: 12px;
+      color: #666;
     }
 
-    .status-dot {
+    .connection-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #22c55e;
     }
 
-    .status-dot.idle {
-      background: #666;
+    .connection-dot.disconnected {
+      background: #ef4444;
     }
 
-    .status-dot.coming {
-      background: #333;
+    /* Agent Row */
+    .agents-row {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .agent-card {
+      flex: 0 0 200px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .agent-card:hover {
+      border-color: #333;
+    }
+
+    .agent-card.selected {
+      border-color: #3b82f6;
+      background: #111827;
+    }
+
+    .agent-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .status-dot.idle { background: #666; }
+    .status-dot.running { background: #f59e0b; animation: pulse 1s infinite; }
+    .status-dot.coming { background: #333; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
 
     .agent-name {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: #fff;
     }
 
-    .agent-task {
+    .agent-desc {
       font-size: 12px;
       color: #666;
-      margin-bottom: 8px;
-      line-height: 1.4;
+      margin-bottom: 10px;
     }
 
-    .agent-meta {
-      font-size: 11px;
-      color: #444;
-    }
-
-    .add-agent {
-      flex: 0 0 60px;
-      background: #111;
-      border: 1px dashed #333;
-      border-radius: 12px;
+    .sub-agents {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 24px;
-      color: #444;
-      transition: all 0.2s;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
-    .add-agent:hover {
-      border-color: #555;
-      color: #666;
+    .sub-agent-chip {
+      font-size: 10px;
+      padding: 3px 8px;
+      background: #1a1a1a;
+      border-radius: 4px;
+      color: #888;
     }
 
-    /* Sections */
-    .sections {
+    .sub-agent-chip.active {
+      background: #22c55e22;
+      color: #22c55e;
+    }
+
+    /* Main Grid */
+    .main-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 350px 1fr;
       gap: 20px;
     }
 
-    @media (max-width: 1000px) {
-      .sections {
+    @media (max-width: 900px) {
+      .main-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    .section {
+    /* Config Panel */
+    .config-panel {
       background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .config-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .config-section {
+      margin-bottom: 20px;
+    }
+
+    .config-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    /* Sub-agent Toggles */
+    .toggle-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toggle-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: #0a0a0a;
       border: 1px solid #1a1a1a;
+      border-radius: 8px;
+    }
+
+    .toggle-item.disabled {
+      opacity: 0.5;
+    }
+
+    .toggle-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .toggle-name {
+      font-size: 13px;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .toggle-desc {
+      font-size: 11px;
+      color: #555;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #333;
+      border-radius: 22px;
+      transition: 0.2s;
+    }
+
+    .toggle-slider:before {
+      content: "";
+      position: absolute;
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background: #666;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    input:checked + .toggle-slider {
+      background: #22c55e;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(18px);
+      background: #fff;
+    }
+
+    /* Input */
+    .config-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: #0a0a0a;
+      border: 1px solid #222;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .config-input:focus {
+      outline: none;
+      border-color: #444;
+    }
+
+    /* Presets */
+    .presets {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .preset-btn {
+      flex: 1;
+      padding: 8px;
+      background: #1a1a1a;
+      border: 1px solid #222;
+      border-radius: 6px;
+      color: #888;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover {
+      border-color: #444;
+      color: #fff;
+    }
+
+    .preset-btn.active {
+      background: #22c55e22;
+      border-color: #22c55e44;
+      color: #22c55e;
+    }
+
+    /* Run Button */
+    .run-btn {
+      width: 100%;
+      padding: 14px;
+      background: #fff;
+      border: none;
+      border-radius: 10px;
+      color: #000;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-top: 10px;
+    }
+
+    .run-btn:hover {
+      background: #e5e5e5;
+    }
+
+    .run-btn:disabled {
+      background: #333;
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    /* Tasks Panel */
+    .tasks-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .tasks-section {
+      background: #111;
+      border: 1px solid #222;
       border-radius: 12px;
       padding: 15px;
     }
 
-    .section-header {
+    .tasks-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
 
-    .section-title {
+    .tasks-title {
       font-size: 12px;
       font-weight: 600;
       color: #666;
@@ -166,7 +378,7 @@
       letter-spacing: 0.5px;
     }
 
-    .section-count {
+    .tasks-count {
       font-size: 11px;
       color: #444;
       background: #1a1a1a;
@@ -174,76 +386,144 @@
       border-radius: 4px;
     }
 
-    /* Task Cards */
+    /* Task Card */
     .task-card {
       background: #0a0a0a;
       border: 1px solid #1a1a1a;
-      border-radius: 8px;
-      padding: 12px;
+      border-radius: 10px;
+      padding: 15px;
       margin-bottom: 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .task-card:hover {
-      border-color: #333;
     }
 
     .task-card:last-child {
       margin-bottom: 0;
     }
 
-    .task-title {
-      font-size: 13px;
-      color: #fff;
-      margin-bottom: 6px;
-      font-weight: 500;
+    .task-card.running {
+      border-color: #f59e0b44;
     }
 
-    .task-desc {
-      font-size: 12px;
-      color: #555;
-      line-height: 1.4;
+    .task-card.completed {
+      border-color: #22c55e44;
+      opacity: 0.8;
     }
 
-    .task-meta {
+    .task-top {
       display: flex;
       justify-content: space-between;
-      margin-top: 8px;
-      font-size: 11px;
-      color: #444;
+      align-items: flex-start;
+      margin-bottom: 8px;
     }
 
     .task-agent {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
     }
 
     .task-agent .dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
+    }
+
+    .task-agent .dot.running { background: #f59e0b; }
+    .task-agent .dot.completed { background: #22c55e; }
+    .task-agent .dot.queued { background: #666; }
+
+    .task-time {
+      font-size: 11px;
+      color: #444;
+    }
+
+    .task-input {
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      margin-bottom: 12px;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: #222;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #22c55e);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .step-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .step-icon.pending {
+      background: #222;
+      color: #555;
+    }
+
+    .step-icon.running {
+      background: #f59e0b;
+      color: #000;
+    }
+
+    .step-icon.completed {
       background: #22c55e;
+      color: #000;
     }
 
-    /* In Progress */
-    .section.in-progress {
-      border-color: #f59e0b33;
+    .step-name {
+      color: #888;
     }
 
-    .section.in-progress .task-card {
-      border-left: 2px solid #f59e0b;
+    .step-name.active {
+      color: #fff;
     }
 
-    /* Completed */
-    .section.completed {
-      border-color: #22c55e33;
-    }
-
-    .section.completed .task-card {
-      border-left: 2px solid #22c55e;
-      opacity: 0.8;
+    /* Task Result */
+    .task-result {
+      background: #0f1a0f;
+      border: 1px solid #22c55e33;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
     }
 
     /* Empty State */
@@ -252,130 +532,6 @@
       padding: 30px;
       color: #333;
       font-size: 13px;
-    }
-
-    /* Quick Actions */
-    .quick-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 25px;
-      padding-top: 20px;
-      border-top: 1px solid #1a1a1a;
-    }
-
-    .quick-btn {
-      flex: 1;
-      padding: 12px;
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 8px;
-      color: #888;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: center;
-    }
-
-    .quick-btn:hover {
-      border-color: #444;
-      color: #fff;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 16px;
-      padding: 25px;
-      width: 90%;
-      max-width: 500px;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .modal-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .modal-close {
-      background: none;
-      border: none;
-      color: #666;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .modal input,
-    .modal textarea,
-    .modal select {
-      width: 100%;
-      padding: 12px 14px;
-      background: #0a0a0a;
-      border: 1px solid #333;
-      border-radius: 8px;
-      color: #fff;
-      font-size: 14px;
-      margin-bottom: 12px;
-      font-family: inherit;
-    }
-
-    .modal textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .modal input:focus,
-    .modal textarea:focus {
-      outline: none;
-      border-color: #555;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .btn-primary {
-      background: #fff;
-      color: #000;
-    }
-
-    .btn-secondary {
-      background: #222;
-      color: #fff;
     }
 
     /* Toast */
@@ -395,6 +551,11 @@
       z-index: 200;
     }
 
+    .toast.error {
+      background: #ef4444;
+      color: #fff;
+    }
+
     .toast.show {
       opacity: 1;
     }
@@ -407,298 +568,460 @@
     <!-- Header -->
     <div class="header">
       <h1>War Room</h1>
-      <div class="agents-live">Agents Live: <span>4/5</span></div>
+      <div class="header-right">
+        <div class="agents-live">Agents: <span>4/5</span></div>
+        <div class="connection-status">
+          <div class="connection-dot" id="connection-dot"></div>
+          <span id="connection-text">Connected</span>
+        </div>
+      </div>
     </div>
 
     <!-- Agent Row -->
     <div class="agents-row">
-      <div class="agent-card active" onclick="openAgent('content')">
+      <div class="agent-card selected" data-agent="content" onclick="selectAgent('content')">
         <div class="agent-top">
-          <div class="status-dot"></div>
+          <div class="status-dot" id="status-content"></div>
           <div class="agent-name">Content</div>
         </div>
-        <div class="agent-task">Twitter & LinkedIn posts</div>
-        <div class="agent-meta">Ready</div>
+        <div class="agent-desc">Twitter & LinkedIn</div>
+        <div class="sub-agents">
+          <span class="sub-agent-chip active">Research</span>
+          <span class="sub-agent-chip active">Writer</span>
+          <span class="sub-agent-chip">Editor</span>
+        </div>
       </div>
 
-      <div class="agent-card active" onclick="openAgent('deal-sourcing')">
+      <div class="agent-card" data-agent="deal-sourcing" onclick="selectAgent('deal-sourcing')">
         <div class="agent-top">
-          <div class="status-dot"></div>
+          <div class="status-dot" id="status-deal-sourcing"></div>
           <div class="agent-name">Deal Sourcing</div>
         </div>
-        <div class="agent-task">Find acquisition targets</div>
-        <div class="agent-meta">Ready</div>
+        <div class="agent-desc">Find acquisition targets</div>
+        <div class="sub-agents">
+          <span class="sub-agent-chip active">Scanner</span>
+          <span class="sub-agent-chip active">Filter</span>
+          <span class="sub-agent-chip">Scorer</span>
+        </div>
       </div>
 
-      <div class="agent-card active" onclick="openAgent('deal-analysis')">
+      <div class="agent-card" data-agent="deal-analysis" onclick="selectAgent('deal-analysis')">
         <div class="agent-top">
-          <div class="status-dot"></div>
+          <div class="status-dot" id="status-deal-analysis"></div>
           <div class="agent-name">Deal Analysis</div>
         </div>
-        <div class="agent-task">Quick deal evaluations</div>
-        <div class="agent-meta">Ready</div>
+        <div class="agent-desc">Quick evaluations</div>
+        <div class="sub-agents">
+          <span class="sub-agent-chip active">Extractor</span>
+          <span class="sub-agent-chip active">Risk</span>
+          <span class="sub-agent-chip">Opportunity</span>
+        </div>
       </div>
 
-      <div class="agent-card active" onclick="openAgent('client-sourcing')">
+      <div class="agent-card" data-agent="client-sourcing" onclick="selectAgent('client-sourcing')">
         <div class="agent-top">
-          <div class="status-dot"></div>
+          <div class="status-dot" id="status-client-sourcing"></div>
           <div class="agent-name">Client Sourcing</div>
         </div>
-        <div class="agent-task">Find buy-side clients</div>
-        <div class="agent-meta">Ready</div>
+        <div class="agent-desc">Find buy-side clients</div>
+        <div class="sub-agents">
+          <span class="sub-agent-chip active">Discovery</span>
+          <span class="sub-agent-chip active">Qualifier</span>
+          <span class="sub-agent-chip">Enricher</span>
+        </div>
       </div>
 
-      <div class="agent-card" onclick="openAgent('admin')">
+      <div class="agent-card" data-agent="admin" style="opacity: 0.5; cursor: not-allowed;">
         <div class="agent-top">
           <div class="status-dot coming"></div>
           <div class="agent-name">Admin</div>
         </div>
-        <div class="agent-task">Ops & reports</div>
-        <div class="agent-meta">Coming soon</div>
+        <div class="agent-desc">Coming soon</div>
       </div>
-
-      <div class="add-agent" onclick="alert('More agents coming soon')">+</div>
     </div>
 
-    <!-- Sections -->
-    <div class="sections">
+    <!-- Main Grid -->
+    <div class="main-grid">
       
-      <!-- Backlog -->
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">Backlog</div>
-          <div class="section-count">3</div>
+      <!-- Config Panel -->
+      <div class="config-panel">
+        <div class="config-title">
+          <span id="config-agent-name">Content Agent</span>
         </div>
+
+        <!-- Presets -->
+        <div class="config-section">
+          <div class="config-label">Speed</div>
+          <div class="presets">
+            <button class="preset-btn" onclick="setPreset('quick')">⚡ Quick</button>
+            <button class="preset-btn active" onclick="setPreset('standard')">Standard</button>
+            <button class="preset-btn" onclick="setPreset('deep')">🔬 Deep</button>
+          </div>
+        </div>
+
+        <!-- Sub-agent Toggles -->
+        <div class="config-section">
+          <div class="config-label">Sub-Agents</div>
+          <div class="toggle-list" id="toggle-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Input -->
+        <div class="config-section">
+          <div class="config-label">Input</div>
+          <textarea class="config-input" id="task-input" placeholder="What do you want to do?"></textarea>
+        </div>
+
+        <button class="run-btn" id="run-btn" onclick="runTask()">Run Agent</button>
+      </div>
+
+      <!-- Tasks Panel -->
+      <div class="tasks-panel">
         
-        <div class="task-card" onclick="runTask('content', 'Write 3 tweet options about off-market deal sourcing')">
-          <div class="task-title">Weekly Twitter content</div>
-          <div class="task-desc">3 tweet options for this week</div>
-          <div class="task-meta">
-            <div class="task-agent"><span class="dot"></span> Content</div>
+        <!-- Running -->
+        <div class="tasks-section">
+          <div class="tasks-header">
+            <div class="tasks-title">Running</div>
+            <div class="tasks-count" id="running-count">0</div>
+          </div>
+          <div id="running-tasks">
+            <div class="empty-state">No active tasks</div>
           </div>
         </div>
 
-        <div class="task-card" onclick="runTask('deal-sourcing', 'Find 10 SaaS deals, $500K-$2M ARR, US only')">
-          <div class="task-title">SaaS deal sourcing</div>
-          <div class="task-desc">10 leads, $500K-$2M ARR range</div>
-          <div class="task-meta">
-            <div class="task-agent"><span class="dot"></span> Deal Sourcing</div>
+        <!-- Completed -->
+        <div class="tasks-section">
+          <div class="tasks-header">
+            <div class="tasks-title">Completed</div>
+            <div class="tasks-count" id="completed-count">0</div>
+          </div>
+          <div id="completed-tasks">
+            <div class="empty-state">No completed tasks yet</div>
           </div>
         </div>
 
-        <div class="task-card" onclick="runTask('client-sourcing', 'Find 10 software holdcos looking for SaaS acquisitions')">
-          <div class="task-title">HoldCo outreach list</div>
-          <div class="task-desc">10 software holdcos to contact</div>
-          <div class="task-meta">
-            <div class="task-agent"><span class="dot"></span> Client Sourcing</div>
-          </div>
-        </div>
       </div>
-
-      <!-- In Progress -->
-      <div class="section in-progress">
-        <div class="section-header">
-          <div class="section-title">In Progress</div>
-          <div class="section-count">0</div>
-        </div>
-        <div class="empty-state">No active tasks</div>
-      </div>
-
-      <!-- Completed -->
-      <div class="section completed">
-        <div class="section-header">
-          <div class="section-title">Completed</div>
-          <div class="section-count">2</div>
-        </div>
-
-        <div class="task-card">
-          <div class="task-title">Off-market tweet thread</div>
-          <div class="task-desc">3 options delivered</div>
-          <div class="task-meta">
-            <div class="task-agent"><span class="dot"></span> Content</div>
-            <span>Yesterday</span>
-          </div>
-        </div>
-
-        <div class="task-card">
-          <div class="task-title">Scava Capital email</div>
-          <div class="task-desc">Negotiation reply drafted</div>
-          <div class="task-meta">
-            <div class="task-agent"><span class="dot"></span> Admin</div>
-            <span>Mar 4</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-      <div class="quick-btn" onclick="openAgent('content')">✍️ New content</div>
-      <div class="quick-btn" onclick="openAgent('deal-sourcing')">🎯 Source deals</div>
-      <div class="quick-btn" onclick="openAgent('deal-analysis')">📊 Analyze deal</div>
-      <div class="quick-btn" onclick="openAgent('client-sourcing')">🤝 Find clients</div>
     </div>
 
   </div>
 
-  <!-- Modals -->
-  <div class="modal" id="modal-content">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">✍️ Content Agent</div>
-        <button class="modal-close" onclick="closeModal('content')">&times;</button>
-      </div>
-      <select id="content-platform">
-        <option value="twitter">Twitter</option>
-        <option value="linkedin">LinkedIn</option>
-      </select>
-      <select id="content-type">
-        <option value="3 options">3 Options</option>
-        <option value="single">Single Post</option>
-        <option value="thread">Thread</option>
-      </select>
-      <input type="text" id="content-topic" placeholder="Topic: e.g., off-market deal sourcing">
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('content')">Cancel</button>
-        <button class="btn btn-primary" onclick="runContent()">Run</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modal-deal-sourcing">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">🎯 Deal Sourcing</div>
-        <button class="modal-close" onclick="closeModal('deal-sourcing')">&times;</button>
-      </div>
-      <input type="number" id="sourcing-count" value="10" placeholder="Number of leads">
-      <input type="text" id="sourcing-type" placeholder="Business type: SaaS, agency, e-com...">
-      <input type="text" id="sourcing-criteria" placeholder="Criteria: $500K-$2M ARR, US only...">
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('deal-sourcing')">Cancel</button>
-        <button class="btn btn-primary" onclick="runSourcing()">Run</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modal-deal-analysis">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">📊 Deal Analysis</div>
-        <button class="modal-close" onclick="closeModal('deal-analysis')">&times;</button>
-      </div>
-      <textarea id="analysis-deal" placeholder="Paste deal info: listing URL, description, or key details..."></textarea>
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('deal-analysis')">Cancel</button>
-        <button class="btn btn-primary" onclick="runAnalysis()">Run</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modal-client-sourcing">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">🤝 Client Sourcing</div>
-        <button class="modal-close" onclick="closeModal('client-sourcing')">&times;</button>
-      </div>
-      <input type="number" id="client-count" value="10" placeholder="Number of leads">
-      <select id="client-type">
-        <option value="individual buyers">Individual Buyers</option>
-        <option value="software holdcos">Software HoldCos</option>
-        <option value="VC-backed startups">VC-Backed Startups</option>
-        <option value="app studios">App Studios</option>
-        <option value="roll-up operators">Roll-Up Operators</option>
-      </select>
-      <input type="text" id="client-criteria" placeholder="Looking for: SaaS, content sites, mobile apps...">
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('client-sourcing')">Cancel</button>
-        <button class="btn btn-primary" onclick="runClient()">Run</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast">Copied! Paste in Telegram →</div>
+  <div class="toast" id="toast"></div>
 
   <script>
-    function openAgent(agent) {
-      if (agent === 'admin') {
-        alert('Admin Agent coming soon');
-        return;
+    // Agent configurations
+    const AGENTS = {
+      'content': {
+        name: 'Content Agent',
+        subAgents: [
+          { id: 'research', name: 'Research', desc: 'Find angles and data', default: true },
+          { id: 'writer', name: 'Writer', desc: 'Draft content', required: true, default: true },
+          { id: 'editor', name: 'Editor', desc: 'Polish and refine', default: true },
+          { id: 'formatter', name: 'Formatter', desc: 'Platform formatting', default: false }
+        ],
+        placeholder: 'Write 3 tweet options about off-market deal sourcing'
+      },
+      'deal-sourcing': {
+        name: 'Deal Sourcing',
+        subAgents: [
+          { id: 'scanner', name: 'Scanner', desc: 'Search marketplaces', required: true, default: true },
+          { id: 'filter', name: 'Filter', desc: 'Apply kill criteria', default: true },
+          { id: 'scorer', name: 'Scorer', desc: 'Rank by fit', default: true },
+          { id: 'enricher', name: 'Enricher', desc: 'Add context', default: false }
+        ],
+        placeholder: 'Find 10 SaaS deals, $500K-$2M ARR, US only'
+      },
+      'deal-analysis': {
+        name: 'Deal Analysis',
+        subAgents: [
+          { id: 'extractor', name: 'Extractor', desc: 'Pull key metrics', required: true, default: true },
+          { id: 'financial', name: 'Financial', desc: 'Revenue and margins', default: true },
+          { id: 'risk', name: 'Risk', desc: 'Red flags', default: true },
+          { id: 'opportunity', name: 'Opportunity', desc: 'Upside potential', default: false }
+        ],
+        placeholder: 'Analyze this deal: [paste listing or URL]'
+      },
+      'client-sourcing': {
+        name: 'Client Sourcing',
+        subAgents: [
+          { id: 'discovery', name: 'Discovery', desc: 'Find potential clients', required: true, default: true },
+          { id: 'qualifier', name: 'Qualifier', desc: '3-question test', default: true },
+          { id: 'enricher', name: 'Enricher', desc: 'Contact info', default: true },
+          { id: 'prioritizer', name: 'Prioritizer', desc: 'Rank by fit', default: false }
+        ],
+        placeholder: 'Find 10 software holdcos looking for SaaS'
       }
-      document.getElementById('modal-' + agent).classList.add('active');
-    }
+    };
 
-    function closeModal(agent) {
-      document.getElementById('modal-' + agent).classList.remove('active');
-    }
+    let currentAgent = 'content';
+    let tasks = [];
+    let pollInterval = null;
 
-    function showToast() {
-      const toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2500);
-    }
+    // API base - auto-detect
+    const API_BASE = window.location.hostname === 'localhost' 
+      ? 'http://localhost:3000/api' 
+      : '/api';
 
-    function copy(text) {
-      navigator.clipboard.writeText(text);
-      showToast();
-      // Close all modals
-      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-    }
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      selectAgent('content');
+      startPolling();
+    });
 
-    function runTask(agent, command) {
-      copy(command);
-    }
-
-    function runContent() {
-      const platform = document.getElementById('content-platform').value;
-      const type = document.getElementById('content-type').value;
-      const topic = document.getElementById('content-topic').value || 'off-market deal sourcing';
+    // Select agent
+    function selectAgent(agent) {
+      if (agent === 'admin') return;
       
-      let cmd = '';
-      if (platform === 'twitter') {
-        if (type === 'thread') cmd = `Write a Twitter thread about ${topic}`;
-        else if (type === 'single') cmd = `Write a tweet about ${topic}`;
-        else cmd = `Write 3 tweet options about ${topic}`;
-      } else {
-        cmd = `Write a LinkedIn post about ${topic}`;
-      }
-      copy(cmd);
+      currentAgent = agent;
+      
+      // Update UI
+      document.querySelectorAll('.agent-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.agent === agent);
+      });
+      
+      const config = AGENTS[agent];
+      document.getElementById('config-agent-name').textContent = config.name;
+      document.getElementById('task-input').placeholder = config.placeholder;
+      
+      // Render toggles
+      renderToggles(config.subAgents);
     }
 
-    function runSourcing() {
-      const count = document.getElementById('sourcing-count').value || '10';
-      const type = document.getElementById('sourcing-type').value || 'SaaS';
-      const criteria = document.getElementById('sourcing-criteria').value || '$500K-$2M ARR';
-      copy(`Find ${count} ${type} deals, ${criteria}`);
+    // Render sub-agent toggles
+    function renderToggles(subAgents) {
+      const container = document.getElementById('toggle-list');
+      container.innerHTML = subAgents.map(sa => `
+        <div class="toggle-item ${sa.required ? 'disabled' : ''}">
+          <div class="toggle-info">
+            <div class="toggle-name">${sa.name}${sa.required ? ' (required)' : ''}</div>
+            <div class="toggle-desc">${sa.desc}</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" 
+              data-subagent="${sa.id}" 
+              ${sa.default ? 'checked' : ''} 
+              ${sa.required ? 'checked disabled' : ''}>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      `).join('');
     }
 
-    function runAnalysis() {
-      const deal = document.getElementById('analysis-deal').value;
-      if (!deal) {
-        alert('Paste deal info first');
-        return;
-      }
-      copy(`Analyze this deal: ${deal}`);
-    }
-
-    function runClient() {
-      const count = document.getElementById('client-count').value || '10';
-      const type = document.getElementById('client-type').value;
-      const criteria = document.getElementById('client-criteria').value;
-      let cmd = `Find ${count} ${type}`;
-      if (criteria) cmd += ` looking for ${criteria}`;
-      copy(cmd);
-    }
-
-    // Close modal on background click
-    document.querySelectorAll('.modal').forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.remove('active');
+    // Set preset
+    function setPreset(preset) {
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(preset));
+      });
+      
+      const config = AGENTS[currentAgent];
+      const toggles = document.querySelectorAll('#toggle-list input[type="checkbox"]');
+      
+      toggles.forEach((toggle, i) => {
+        if (toggle.disabled) return;
+        const sa = config.subAgents[i];
+        
+        if (preset === 'quick') {
+          toggle.checked = sa.required || i === 0;
+        } else if (preset === 'standard') {
+          toggle.checked = sa.default;
+        } else if (preset === 'deep') {
+          toggle.checked = true;
         }
       });
-    });
+    }
+
+    // Get selected sub-agents
+    function getSelectedSubAgents() {
+      const selected = [];
+      document.querySelectorAll('#toggle-list input[type="checkbox"]:checked').forEach(toggle => {
+        selected.push(toggle.dataset.subagent);
+      });
+      return selected;
+    }
+
+    // Run task
+    async function runTask() {
+      const input = document.getElementById('task-input').value.trim();
+      if (!input) {
+        showToast('Enter a task first', 'error');
+        return;
+      }
+      
+      const subAgents = getSelectedSubAgents();
+      const btn = document.getElementById('run-btn');
+      
+      btn.disabled = true;
+      btn.textContent = 'Starting...';
+      
+      try {
+        const res = await fetch(`${API_BASE}/tasks`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            agent: currentAgent,
+            subAgents,
+            input
+          })
+        });
+        
+        const data = await res.json();
+        
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        
+        showToast('Task started!');
+        document.getElementById('task-input').value = '';
+        
+        // Immediately poll for updates
+        pollTasks();
+        
+      } catch (e) {
+        showToast(e.message || 'Failed to start task', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Run Agent';
+      }
+    }
+
+    // Poll for task updates
+    async function pollTasks() {
+      try {
+        const res = await fetch(`${API_BASE}/tasks`);
+        const data = await res.json();
+        tasks = data.tasks || [];
+        renderTasks();
+        updateConnectionStatus(true);
+      } catch (e) {
+        updateConnectionStatus(false);
+      }
+    }
+
+    // Start polling
+    function startPolling() {
+      pollTasks();
+      pollInterval = setInterval(pollTasks, 3000);
+    }
+
+    // Render tasks
+    function renderTasks() {
+      const running = tasks.filter(t => t.status === 'running' || t.status === 'queued');
+      const completed = tasks.filter(t => t.status === 'completed').slice(0, 10);
+      
+      document.getElementById('running-count').textContent = running.length;
+      document.getElementById('completed-count').textContent = completed.length;
+      
+      // Running tasks
+      const runningContainer = document.getElementById('running-tasks');
+      if (running.length === 0) {
+        runningContainer.innerHTML = '<div class="empty-state">No active tasks</div>';
+      } else {
+        runningContainer.innerHTML = running.map(renderTaskCard).join('');
+      }
+      
+      // Completed tasks
+      const completedContainer = document.getElementById('completed-tasks');
+      if (completed.length === 0) {
+        completedContainer.innerHTML = '<div class="empty-state">No completed tasks yet</div>';
+      } else {
+        completedContainer.innerHTML = completed.map(t => renderTaskCard(t, true)).join('');
+      }
+      
+      // Update agent status dots
+      const activeAgents = new Set(running.map(t => t.agent));
+      Object.keys(AGENTS).forEach(agent => {
+        const dot = document.getElementById(`status-${agent}`);
+        if (dot) {
+          dot.classList.toggle('running', activeAgents.has(agent));
+        }
+      });
+    }
+
+    // Render single task card
+    function renderTaskCard(task, isCompleted = false) {
+      const agentConfig = AGENTS[task.agent] || { name: task.agent };
+      const statusClass = isCompleted ? 'completed' : (task.status === 'running' ? 'running' : '');
+      
+      let progressHtml = '';
+      if (!isCompleted && task.steps && task.steps.length > 0) {
+        progressHtml = `
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${task.progress || 0}%"></div>
+            </div>
+            <div class="progress-steps">
+              ${task.steps.map(step => `
+                <div class="progress-step">
+                  <div class="step-icon ${step.status}">${
+                    step.status === 'completed' ? '✓' : 
+                    step.status === 'running' ? '●' : '○'
+                  }</div>
+                  <span class="step-name ${step.status === 'running' ? 'active' : ''}">${step.name}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      let resultHtml = '';
+      if (isCompleted && task.result) {
+        resultHtml = `<div class="task-result">${escapeHtml(task.result)}</div>`;
+      }
+      
+      return `
+        <div class="task-card ${statusClass}">
+          <div class="task-top">
+            <div class="task-agent">
+              <span class="dot ${task.status}"></span>
+              ${agentConfig.name}
+            </div>
+            <div class="task-time">${formatTime(task.createdAt)}</div>
+          </div>
+          <div class="task-input">${escapeHtml(task.input)}</div>
+          ${progressHtml}
+          ${resultHtml}
+        </div>
+      `;
+    }
+
+    // Update connection status
+    function updateConnectionStatus(connected) {
+      const dot = document.getElementById('connection-dot');
+      const text = document.getElementById('connection-text');
+      dot.classList.toggle('disconnected', !connected);
+      text.textContent = connected ? 'Connected' : 'Disconnected';
+    }
+
+    // Show toast
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Format time
+    function formatTime(isoString) {
+      if (!isoString) return '';
+      const date = new Date(isoString);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMins = Math.floor(diffMs / 60000);
+      
+      if (diffMins < 1) return 'Just now';
+      if (diffMins < 60) return `${diffMins}m ago`;
+      if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
+      return date.toLocaleDateString();
+    }
+
+    // Escape HTML
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
   </script>
 
 </body>
