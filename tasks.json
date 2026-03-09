@@ -1,3 +1,43 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id": "qkgm1eca",
+      "agent": "deal-sourcing",
+      "subAgents": [
+        "scanner",
+        "filter",
+        "scorer",
+        "enricher"
+      ],
+      "input": "Find 1 gaming SaaS",
+      "status": "queued",
+      "progress": 0,
+      "currentStep": null,
+      "steps": [
+        {
+          "name": "scanner",
+          "status": "pending",
+          "progress": 0
+        },
+        {
+          "name": "filter",
+          "status": "pending",
+          "progress": 0
+        },
+        {
+          "name": "scorer",
+          "status": "pending",
+          "progress": 0
+        },
+        {
+          "name": "enricher",
+          "status": "pending",
+          "progress": 0
+        }
+      ],
+      "result": null,
+      "createdAt": "2026-03-09T08:25:59.211Z",
+      "updatedAt": "2026-03-09T08:25:59.211Z"
+    }
+  ]
 }
