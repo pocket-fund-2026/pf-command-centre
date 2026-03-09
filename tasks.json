@@ -10,13 +10,13 @@
         "enricher"
       ],
       "input": "Find 1 gaming SaaS",
-      "status": "queued",
-      "progress": 0,
-      "currentStep": null,
+      "status": "failed",
+      "progress": 15,
+      "currentStep": "scanner",
       "steps": [
         {
           "name": "scanner",
-          "status": "pending",
+          "status": "failed",
           "progress": 0
         },
         {
@@ -36,8 +36,9 @@
         }
       ],
       "result": null,
+      "error": "Scanner failed: Web search unavailable (no Brave API key configured) and browser automation unavailable (no browser installed on host). Please configure BRAVE_API_KEY or install Chrome/Chromium to enable deal scanning.",
       "createdAt": "2026-03-09T08:25:59.211Z",
-      "updatedAt": "2026-03-09T08:25:59.211Z"
+      "updatedAt": "2026-03-09T08:35:00.000Z"
     }
   ]
 }
