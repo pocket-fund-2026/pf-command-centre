@@ -1,6 +1,30 @@
 {
   "tasks": [
     {
+      "id": "kz8vpoxs",
+      "title": "Review the top 10 results when searching \"kautilya\" and assess whether we can outrank them",
+      "type": "research",
+      "assignee": "human:aryan",
+      "priority": "p1",
+      "status": "queued",
+      "estimatedMinutes": null,
+      "actualMinutes": null,
+      "createdBy": "dev",
+      "createdAt": "2026-05-28T07:15:59.852Z",
+      "startedAt": null,
+      "completedAt": null,
+      "blockedReason": null,
+      "output": null,
+      "agent": null,
+      "subAgents": [],
+      "input": "Review the top 10 results when searching \"kautilya\" and assess whether we can outrank them",
+      "progress": 0,
+      "currentStep": null,
+      "steps": [],
+      "error": null,
+      "updatedAt": "2026-05-28T07:15:59.852Z"
+    },
+    {
       "id": "9diax3ch",
       "title": "Identify the top competitors to analyze (businesses ranking on \"kautilya\" and related searches)",
       "type": "research",
