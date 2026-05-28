@@ -1,6 +1,30 @@
 {
   "tasks": [
     {
+      "id": "9diax3ch",
+      "title": "Identify the top competitors to analyze (businesses ranking on \"kautilya\" and related searches)",
+      "type": "research",
+      "assignee": "human:aryan",
+      "priority": "p1",
+      "status": "queued",
+      "estimatedMinutes": null,
+      "actualMinutes": null,
+      "createdBy": "dev",
+      "createdAt": "2026-05-28T07:15:58.132Z",
+      "startedAt": null,
+      "completedAt": null,
+      "blockedReason": null,
+      "output": null,
+      "agent": null,
+      "subAgents": [],
+      "input": "Identify the top competitors to analyze (businesses ranking on \"kautilya\" and related searches)",
+      "progress": 0,
+      "currentStep": null,
+      "steps": [],
+      "error": null,
+      "updatedAt": "2026-05-28T07:15:58.132Z"
+    },
+    {
       "id": "exdve3sq",
       "title": "Finalize the list of keywords Kautilya should target and can realistically rank for",
       "type": "research",
