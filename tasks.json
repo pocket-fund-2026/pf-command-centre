@@ -1,6 +1,30 @@
 {
   "tasks": [
     {
+      "id": "8x7c3epl",
+      "title": "Look into Flipas SEO keywords and steal relevant keywords from business marketplace players like Acquire, Flippa, etc.",
+      "type": "research",
+      "assignee": "human:aryan",
+      "priority": "p1",
+      "status": "queued",
+      "estimatedMinutes": null,
+      "actualMinutes": null,
+      "createdBy": "dev",
+      "createdAt": "2026-05-28T07:16:01.578Z",
+      "startedAt": null,
+      "completedAt": null,
+      "blockedReason": null,
+      "output": null,
+      "agent": null,
+      "subAgents": [],
+      "input": "Look into Flipas SEO keywords and steal relevant keywords from business marketplace players like Acquire, Flippa, etc.",
+      "progress": 0,
+      "currentStep": null,
+      "steps": [],
+      "error": null,
+      "updatedAt": "2026-05-28T07:16:01.578Z"
+    },
+    {
       "id": "kz8vpoxs",
       "title": "Review the top 10 results when searching \"kautilya\" and assess whether we can outrank them",
       "type": "research",
