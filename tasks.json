@@ -1,6 +1,30 @@
 {
   "tasks": [
     {
+      "id": "exdve3sq",
+      "title": "Finalize the list of keywords Kautilya should target and can realistically rank for",
+      "type": "research",
+      "assignee": "human:aryan",
+      "priority": "p1",
+      "status": "queued",
+      "estimatedMinutes": null,
+      "actualMinutes": null,
+      "createdBy": "dev",
+      "createdAt": "2026-05-28T07:15:55.914Z",
+      "startedAt": null,
+      "completedAt": null,
+      "blockedReason": null,
+      "output": null,
+      "agent": null,
+      "subAgents": [],
+      "input": "Finalize the list of keywords Kautilya should target and can realistically rank for",
+      "progress": 0,
+      "currentStep": null,
+      "steps": [],
+      "error": null,
+      "updatedAt": "2026-05-28T07:15:55.914Z"
+    },
+    {
       "id": "w2b9gsbf",
       "title": "give me 5 SaaS deals under 50K",
       "type": "ops",
